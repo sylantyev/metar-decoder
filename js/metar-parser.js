@@ -254,7 +254,7 @@ function parseWind(token) {
  * 0800
  */
 function isVisibilityGroup(token) {
-    return /^\d{4}$/.test(token);
+    return /^\d{4}$/.test(token) || /^\d+(?:\.\d+)?SM$/.test(token);
 }
 
 
@@ -262,6 +262,18 @@ function isVisibilityGroup(token) {
  * Parse visibility.
  */
 function parseVisibility(token) {
+    if (token.endsWith("SM")) {
+        const miles = Number(token.slice(0, -2));
+        const meters = Math.round(miles * 1609.344);
+
+        return {
+            raw: token,
+            meters: meters,
+            statuteMiles: miles,
+            text: `${meters} m`
+        };
+    }
+
     const value = Number(token);
 
     return {
