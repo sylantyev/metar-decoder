@@ -24,7 +24,7 @@ test("Basic METAR", "UKBB 161500Z 25006MPS 9999 SCT030 18/12 Q1018 NOSIG", resul
 test("Calm wind", "KMSO 290953Z AUTO 00000KT 10SM CLR 14/04 A2992", result => {
     assert.strictEqual(result.wind.direction, "000");
     assert.strictEqual(result.wind.speed, 0);
-    assert.ok(result.unknown.includes("AUTO"));
+    assert.ok(result.modifiers.includes("AUTO"));
     assert.ok(result.unknown.includes("10SM"));
     assert.ok(result.unknown.includes("CLR"));
     assert.strictEqual(result.pressure.inHg, 29.92);
@@ -52,7 +52,7 @@ test("CAVOK is currently unknown", "LIBF 112050Z 28008KT CAVOK 25/20 Q1018", res
 });
 
 test("AUTO cloud groups", "EDMA 032050Z AUTO VRB02KT 9999 // FEW063/// OVC076/// 21/11 Q1022", result => {
-    assert.ok(result.unknown.includes("AUTO"));
+    assert.ok(result.modifiers.includes("AUTO"));
     assert.ok(result.unknown.includes("//"));
     assert.ok(result.unknown.includes("FEW063///"));
     assert.ok(result.unknown.includes("OVC076///"));
@@ -94,4 +94,9 @@ test("Multiple clouds", "UKBB 161500Z 25006KT 9999 FEW050 SCT080 BKN120 OVC250 1
     assert.strictEqual(result.clouds[3].altitudeFeet, 25000);
 });
 
+//
+test("AUTO modifier", "KMSO 290953Z AUTO 00000KT 10SM CLR 14/04 A2992", result => {
+    assert.ok(result.modifiers.includes("AUTO"));
+    assert.ok(!result.unknown.includes("AUTO"));
+});
 console.log("\nAll automated v0.1 tests passed.");

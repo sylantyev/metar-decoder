@@ -40,6 +40,7 @@ function parseMETAR(metarText) {
         dewPoint: null,
         pressure: null,
         trend: null,
+        modifiers: [],
         unknown: []
     };
 
@@ -77,6 +78,11 @@ function parseMETAR(metarText) {
 
     while (i < tokens.length) {
         const token = tokens[i];
+        if (token === "AUTO") {
+        result.modifiers.push("AUTO");
+        i++;
+        continue;
+}
 
         /*
          * Wind
