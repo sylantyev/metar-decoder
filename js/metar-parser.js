@@ -83,6 +83,11 @@ function parseMETAR(metarText) {
         i++;
         continue;
 }
+        if (token === "COR") {
+        result.modifiers.push("COR");
+        i++;
+        continue;
+}
 
         /*
          * Wind

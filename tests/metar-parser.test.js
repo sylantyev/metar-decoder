@@ -59,7 +59,7 @@ test("AUTO cloud groups", "EDMA 032050Z AUTO VRB02KT 9999 // FEW063/// OVC076///
 });
 
 test("COR", "KMSO 291353Z COR 26004KT 10SM BKN080 12/04 A2993", result => {
-    assert.ok(result.unknown.includes("COR"));
+    assert.ok(result.modifiers.includes("COR"));
     assert.strictEqual(result.clouds[0].amount, "BKN");
 });
 
