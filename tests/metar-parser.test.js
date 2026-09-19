@@ -61,8 +61,13 @@ test("Negative temperature", "KMSO 181200Z 18005KT 9999 FEW020 M03/M08 Q1015", r
     assert.strictEqual(result.clouds[0].altitudeFeet, 2000);
 });
 
-test("CAVOK is currently unknown", "LIBF 112050Z 28008KT CAVOK 25/20 Q1018", result => {
-    assert.ok(result.unknown.includes("CAVOK"));
+
+
+/**/
+test("CAVOK", "LIBF 112050Z 28008KT CAVOK 25/20 Q1018", result => {
+    assert.strictEqual(result.visibility.cavok, true);
+    assert.strictEqual(result.visibility.meters, 10000);
+    assert.strictEqual(result.clouds.length, 0);
 });
 
 test("AUTO cloud groups", "EDMA 032050Z AUTO VRB02KT 9999 // FEW063/// OVC076/// 21/11 Q1022", result => {

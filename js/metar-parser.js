@@ -114,6 +114,19 @@ function parseMETAR(metarText) {
             continue;
         }
 
+        /**/
+if (token === "CAVOK") {
+    result.visibility = {
+        raw: token,
+        cavok: true,
+        meters: 10000,
+        text: "10 km or more"
+    };
+
+    i++;
+    continue;
+}
+
         /*
          * Weather phenomena.
          * Examples:
