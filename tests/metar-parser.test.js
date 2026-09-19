@@ -26,7 +26,7 @@ test("Calm wind", "KMSO 290953Z AUTO 00000KT 10SM CLR 14/04 A2992", result => {
     assert.strictEqual(result.wind.speed, 0);
     assert.ok(result.modifiers.includes("AUTO"));
     assert.strictEqual(result.visibility.statuteMiles, 10);
-    assert.ok(result.unknown.includes("CLR"));
+    assert.strictEqual(result.clouds[0].amount, "CLR");
     assert.strictEqual(result.pressure.inHg, 29.92);
 });
 
@@ -39,6 +39,14 @@ test("US visibility", "KMSO 282053Z VRB03KT 10SM CLR 27/06 A2991", result => {
 test("Variable wind", "KMSO 282053Z VRB03KT 10SM CLR 27/06 A2991", result => {
     assert.strictEqual(result.wind.direction, "VRB");
     assert.strictEqual(result.wind.speed, 3);
+});
+
+/**/
+
+test("CLR cloud condition", "KMSO 282053Z VRB03KT 10SM CLR 27/06 A2991", result => {
+    assert.strictEqual(result.clouds.length, 1);
+    assert.strictEqual(result.clouds[0].amount, "CLR");
+    assert.strictEqual(result.clouds[0].altitudeFeet, null);
 });
 
 test("Wind gust", "KMJX 100256Z AUTO 20009G14KT 10SM CLR 23/18 A3003", result => {

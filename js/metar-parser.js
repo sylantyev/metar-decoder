@@ -141,6 +141,18 @@ function parseMETAR(metarText) {
             continue;
         }
 
+if (token === "CLR") {
+    result.clouds.push({
+        raw: token,
+        amount: "CLR",
+        altitudeHundredsFeet: null,
+        altitudeFeet: null,
+        type: null
+    });
+    i++;
+    continue;
+}
+
         /*
          * Temperature / dew point
          * Examples:
