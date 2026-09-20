@@ -174,6 +174,22 @@ if (token === "NSC") {
     continue;
 }
 
+/**/
+if (token === "NCD") {
+    result.clouds.push({
+        raw: token,
+        amount: "NCD",
+        altitudeHundredsFeet: null,
+        altitudeFeet: null,
+        type: null
+    });
+
+    i++;
+    continue;
+}
+
+
+
 if (token === "CLR") {
     result.clouds.push({
         raw: token,

@@ -77,6 +77,14 @@ test("NSC", "UKBB 161500Z 25006KT 9999 NSC 18/12 Q1018", result => {
     assert.strictEqual(result.clouds[0].altitudeFeet, null);
 });
 
+/**/
+test("NCD", "UKBB 161500Z 25006KT 9999 NCD 18/12 Q1018", result => {
+    assert.strictEqual(result.clouds.length, 1);
+    assert.strictEqual(result.clouds[0].amount, "NCD");
+    assert.strictEqual(result.clouds[0].altitudeFeet, null);
+});
+
+
 test("AUTO cloud groups", "EDMA 032050Z AUTO VRB02KT 9999 // FEW063/// OVC076/// 21/11 Q1022", result => {
     assert.ok(result.modifiers.includes("AUTO"));
     assert.ok(result.unknown.includes("//"));
