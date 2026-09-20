@@ -96,8 +96,24 @@ test("Thunderstorm", "UKBB 161300Z 34015G25KT 4000 TSRA SCT012CB 18/16 Q1008", r
 test("Fog and RVR", "ESMQ 300120Z AUTO 15003KT 0150 R16/1000N R34/P1500N FG FEW001/// 13/13 Q1007", result => {
     assert.strictEqual(result.visibility.meters, 150);
     assert.strictEqual(result.weather[0].raw, "FG");
-    assert.ok(result.unknown.includes("R16/1000N"));
-    assert.ok(result.unknown.includes("R34/P1500N"));
+    assert.strictEqual(result.rvr.length, 2);
+    assert.strictEqual(result.rvr[0].runway, "16");
+    assert.strictEqual(result.rvr[0].visibility, 1000);
+    assert.strictEqual(result.rvr[0].trend, "N");
+    assert.strictEqual(result.rvr[1].runway, "34");
+    assert.strictEqual(result.rvr[1].visibility, 1500);
+    assert.strictEqual(result.rvr[1].above, true);
+});
+
+/**/ 
+test("RVR", "ESMQ 300120Z AUTO 15003KT 0150 R16/1000N R34/P1500N FG FEW001/// 13/13 Q1007", result => {
+    assert.strictEqual(result.rvr.length, 2);
+    assert.strictEqual(result.rvr[0].runway, "16");
+    assert.strictEqual(result.rvr[0].visibility, 1000);
+    assert.strictEqual(result.rvr[0].trend, "N");
+    assert.strictEqual(result.rvr[1].runway, "34");
+    assert.strictEqual(result.rvr[1].visibility, 1500);
+    assert.strictEqual(result.rvr[1].above, true);
 });
 
 test("Remarks", "KMJX 100256Z 20009G14KT 10SM SCT025 23/18 A3003 RMK AO2 SLP170 T02280178 58008", result => {

@@ -34,6 +34,7 @@ function parseMETAR(metarText) {
         observationTime: null,
         wind: null,
         visibility: null,
+        rvr: [],
         weather: [],
         clouds: [],
         temperature: null,
@@ -113,6 +114,12 @@ function parseMETAR(metarText) {
             i++;
             continue;
         }
+
+if (isRVRGroup(token)) {
+    result.rvr.push(parseRVR(token));
+    i++;
+    continue;
+}
 
         /**/
 if (token === "CAVOK") {
@@ -309,6 +316,32 @@ function parseVisibility(token) {
             : `${value} m`
     };
 }
+
+/**/
+function isRVRGroup(token) {
+    return /^R\d{2}\/(?:P|M)?\d{4}[NDUV]?$/.test(token);
+}
+
+function parseRVR(token) {
+    const match = token.match(
+        /^R(\d{2})\/(P|M)?(\d{4})([NDUV])?$/
+    );
+
+    if (!match) {
+        return null;
+    }
+
+    return {
+        raw: token,
+        runway: match[1],
+        prefix: match[2] || null,
+        visibility: Number(match[3]),
+        trend: match[4] || null,
+        above: match[2] === "P",
+        below: match[2] === "M"
+    };
+}
+
 
 
 /**
