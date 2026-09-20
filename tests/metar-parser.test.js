@@ -70,6 +70,13 @@ test("CAVOK", "LIBF 112050Z 28008KT CAVOK 25/20 Q1018", result => {
     assert.strictEqual(result.clouds.length, 0);
 });
 
+/**/
+test("NSC", "UKBB 161500Z 25006KT 9999 NSC 18/12 Q1018", result => {
+    assert.strictEqual(result.clouds.length, 1);
+    assert.strictEqual(result.clouds[0].amount, "NSC");
+    assert.strictEqual(result.clouds[0].altitudeFeet, null);
+});
+
 test("AUTO cloud groups", "EDMA 032050Z AUTO VRB02KT 9999 // FEW063/// OVC076/// 21/11 Q1022", result => {
     assert.ok(result.modifiers.includes("AUTO"));
     assert.ok(result.unknown.includes("//"));

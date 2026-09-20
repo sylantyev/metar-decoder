@@ -161,6 +161,19 @@ if (token === "CAVOK") {
             continue;
         }
 
+if (token === "NSC") {
+    result.clouds.push({
+        raw: token,
+        amount: "NSC",
+        altitudeHundredsFeet: null,
+        altitudeFeet: null,
+        type: null
+    });
+
+    i++;
+    continue;
+}
+
 if (token === "CLR") {
     result.clouds.push({
         raw: token,
