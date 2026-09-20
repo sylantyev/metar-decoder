@@ -73,8 +73,13 @@ test("CAVOK", "LIBF 112050Z 28008KT CAVOK 25/20 Q1018", result => {
 test("AUTO cloud groups", "EDMA 032050Z AUTO VRB02KT 9999 // FEW063/// OVC076/// 21/11 Q1022", result => {
     assert.ok(result.modifiers.includes("AUTO"));
     assert.ok(result.unknown.includes("//"));
-    assert.ok(result.unknown.includes("FEW063///"));
-    assert.ok(result.unknown.includes("OVC076///"));
+    assert.strictEqual(result.clouds.length, 2);
+    assert.strictEqual(result.clouds[0].amount, "FEW");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 6300);
+    assert.strictEqual(result.clouds[0].automated, true);
+    assert.strictEqual(result.clouds[1].amount, "OVC");
+    assert.strictEqual(result.clouds[1].altitudeFeet, 7600);
+    assert.strictEqual(result.clouds[1].automated, true);
 });
 
 test("COR", "KMSO 291353Z COR 26004KT 10SM BKN080 12/04 A2993", result => {

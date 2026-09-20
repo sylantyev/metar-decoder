@@ -376,7 +376,7 @@ function parseWeather(token) {
  * Detect cloud group.
  */
 function isCloudGroup(token) {
-    return /^(FEW|SCT|BKN|OVC)\d{3}(CB|TCU)?$/.test(token);
+    return /^(FEW|SCT|BKN|OVC)\d{3}(CB|TCU)?(\/\/\/)?$/.test(token);
 }
 
 
@@ -385,7 +385,7 @@ function isCloudGroup(token) {
  */
 function parseCloud(token) {
     const match = token.match(
-        /^(FEW|SCT|BKN|OVC)(\d{3})(CB|TCU)?$/
+        /^(FEW|SCT|BKN|OVC)(\d{3})(CB|TCU)?(\/\/\/)?$/
     );
 
     if (!match) {
@@ -397,7 +397,8 @@ function parseCloud(token) {
         amount: match[1],
         altitudeHundredsFeet: Number(match[2]),
         altitudeFeet: Number(match[2]) * 100,
-        type: match[3] || null
+        type: match[3] || null,
+        automated: Boolean(match[4])
     };
 }
 
