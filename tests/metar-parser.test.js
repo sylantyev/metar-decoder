@@ -162,4 +162,10 @@ test("Vertical visibility", "UKBB 161500Z 25006KT 3000 VV003 18/12 Q1018", resul
     assert.strictEqual(result.visibility.meters, 91);
 });
 
+/**/
+test("Fractional visibility", "KMSO 291200Z 25005KT 3/4SM CLR 10/05 A3000", result => {
+    assert.strictEqual(result.visibility.statuteMiles, 0.75);
+    assert.strictEqual(result.visibility.meters, 1207);
+});
+
 console.log("\nAll automated v0.1 tests passed.");

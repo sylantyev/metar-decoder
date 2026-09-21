@@ -320,23 +320,46 @@ function parseWind(token) {
  * 5000
  * 0800
  */
+
+/**/
 function isVisibilityGroup(token) {
-    return /^\d{4}$/.test(token) || /^\d+(?:\.\d+)?SM$/.test(token);
+    return /^\d{4}$/.test(token)
+        || /^\d+(?:\.\d+)?SM$/.test(token)
+        || /^(?:M)?\d+\/\d+SM$/.test(token);
 }
 
 
 /**
  * Parse visibility.
  */
+
+/**/
 function parseVisibility(token) {
     if (token.endsWith("SM")) {
-        const miles = Number(token.slice(0, -2));
+        let value = token.slice(0, -2);
+        let modifier = null;
+
+        if (value.startsWith("M")) {
+            modifier = "less_than";
+            value = value.substring(1);
+        }
+
+        let miles;
+
+        if (value.includes("/")) {
+            const [numerator, denominator] = value.split("/");
+            miles = Number(numerator) / Number(denominator);
+        } else {
+            miles = Number(value);
+        }
+
         const meters = Math.round(miles * 1609.344);
 
         return {
             raw: token,
             meters: meters,
             statuteMiles: miles,
+            modifier: modifier,
             text: `${meters} m`
         };
     }
