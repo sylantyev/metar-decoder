@@ -168,4 +168,10 @@ test("Fractional visibility", "KMSO 291200Z 25005KT 3/4SM CLR 10/05 A3000", resu
     assert.strictEqual(result.visibility.meters, 1207);
 });
 
+/**/
+test("Mixed visibility", "KMSO 291200Z 25005KT 1 1/2SM CLR 10/05 A3000", result => {
+    assert.strictEqual(result.visibility.statuteMiles, 1.5);
+    assert.strictEqual(result.visibility.meters, 2414);
+});
+
 console.log("\nAll automated v0.1 tests passed.");

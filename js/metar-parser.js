@@ -27,6 +27,18 @@ function parseMETAR(metarText) {
 
     const tokens = raw.split(" ");
 
+/**/
+
+if (tokens.length > 1) {
+    for (let j = 0; j < tokens.length - 1; j++) {
+        if (/^\d+$/.test(tokens[j]) && /^(?:M)?\d+\/\d+SM$/.test(tokens[j + 1])) {
+            tokens[j] = `${tokens[j]} ${tokens[j + 1]}`;
+            tokens.splice(j + 1, 1);
+            break;
+        }
+    }
+}
+
     const result = {
         raw: raw,
         type: "METAR",
@@ -322,10 +334,12 @@ function parseWind(token) {
  */
 
 /**/
+/**/
 function isVisibilityGroup(token) {
     return /^\d{4}$/.test(token)
         || /^\d+(?:\.\d+)?SM$/.test(token)
-        || /^(?:M)?\d+\/\d+SM$/.test(token);
+        || /^(?:M)?\d+\/\d+SM$/.test(token)
+        || /^(?:M)?\d+ \d+\/\d+SM$/.test(token);
 }
 
 
@@ -333,6 +347,7 @@ function isVisibilityGroup(token) {
  * Parse visibility.
  */
 
+/**/
 /**/
 function parseVisibility(token) {
     if (token.endsWith("SM")) {
@@ -346,8 +361,14 @@ function parseVisibility(token) {
 
         let miles;
 
-        if (value.includes("/")) {
+        if (value.includes(" ")) {
+            const [whole, fraction] = value.split(" ");
+            const [numerator, denominator] = fraction.split("/");
+
+            miles = Number(whole) + Number(numerator) / Number(denominator);
+        } else if (value.includes("/")) {
             const [numerator, denominator] = value.split("/");
+
             miles = Number(numerator) / Number(denominator);
         } else {
             miles = Number(value);
@@ -374,6 +395,8 @@ function parseVisibility(token) {
             : `${value} m`
     };
 }
+
+
 
 /**/
 function isVerticalVisibilityGroup(token) {
