@@ -116,6 +116,20 @@ if (tokens.length > 1) {
             i++;
             continue;
         }
+/**/
+if (isVariableWindGroup(token)) {
+    const variableWind = parseVariableWind(token);
+
+    if (result.wind) {
+        result.wind.variableFrom = variableWind.from;
+        result.wind.variableTo = variableWind.to;
+    }
+
+    i++;
+    continue;
+}
+
+
 
         /*
          * Visibility
@@ -296,6 +310,21 @@ function isWindGroup(token) {
     return /^(VRB|\d{3})\d{2}(G\d{2})?(KT|MPS)$/.test(token);
 }
 
+/**/
+
+function isVariableWindGroup(token) {
+    return /^\d{3}V\d{3}$/.test(token);
+}
+
+function parseVariableWind(token) {
+    const match = token.match(/^(\d{3})V(\d{3})$/);
+
+    return {
+        raw: token,
+        from: Number(match[1]),
+        to: Number(match[2])
+    };
+}
 
 /**
  * Parse wind.

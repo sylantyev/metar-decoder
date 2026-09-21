@@ -174,4 +174,10 @@ test("Mixed visibility", "KMSO 291200Z 25005KT 1 1/2SM CLR 10/05 A3000", result 
     assert.strictEqual(result.visibility.meters, 2414);
 });
 
+/**/
+test("Wind direction variation", "KMSO 291200Z 18010KT 180V240 9999 SCT030 10/05 A3000", result => {
+    assert.strictEqual(result.wind.variableFrom, 180);
+    assert.strictEqual(result.wind.variableTo, 240);
+});
+
 console.log("\nAll automated v0.1 tests passed.");
