@@ -189,6 +189,12 @@ if (token === "NCD") {
 }
 
 
+/**/
+if (isVerticalVisibilityGroup(token)) {
+    result.visibility = parseVerticalVisibility(token);
+    i++;
+    continue;
+}
 
 if (token === "CLR") {
     result.clouds.push({
@@ -343,6 +349,23 @@ function parseVisibility(token) {
         text: value === 9999
             ? "10 km or more"
             : `${value} m`
+    };
+}
+
+/**/
+function isVerticalVisibilityGroup(token) {
+    return /^VV\d{3}$/.test(token);
+}
+
+function parseVerticalVisibility(token) {
+    const feet = Number(token.substring(2)) * 100;
+
+    return {
+        raw: token,
+        verticalVisibility: true,
+        feet: feet,
+        meters: Math.round(feet * 0.3048),
+        text: `${feet} ft`
     };
 }
 

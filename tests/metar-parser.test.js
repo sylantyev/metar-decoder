@@ -154,4 +154,12 @@ test("AUTO modifier", "KMSO 290953Z AUTO 00000KT 10SM CLR 14/04 A2992", result =
     assert.ok(result.modifiers.includes("AUTO"));
     assert.ok(!result.unknown.includes("AUTO"));
 });
+
+/**/
+test("Vertical visibility", "UKBB 161500Z 25006KT 3000 VV003 18/12 Q1018", result => {
+    assert.strictEqual(result.visibility.verticalVisibility, true);
+    assert.strictEqual(result.visibility.feet, 300);
+    assert.strictEqual(result.visibility.meters, 91);
+});
+
 console.log("\nAll automated v0.1 tests passed.");
