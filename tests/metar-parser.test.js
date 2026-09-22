@@ -39,6 +39,8 @@ test("US visibility", "KMSO 282053Z VRB03KT 10SM CLR 27/06 A2991", result => {
 test("Variable wind", "KMSO 282053Z VRB03KT 10SM CLR 27/06 A2991", result => {
     assert.strictEqual(result.wind.direction, "VRB");
     assert.strictEqual(result.wind.speed, 3);
+    assert.strictEqual(result.wind.variableFrom, undefined);
+    assert.strictEqual(result.wind.variableTo, undefined);
 });
 
 /**/
