@@ -474,8 +474,11 @@ function parseRVR(token) {
 /**
  * Detect weather group.
  */
+
+/**/
 function isWeatherGroup(token) {
-    return /^(\+|-|VC)?(MI|BC|PR|DR|BL|SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)$/.test(token);
+    return /^(\+|-|VC)?(MI|BC|PR|DR|BL|SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)$/.test(token)
+        || /^VC(SH|TS)$/.test(token);
 }
 
 

@@ -182,4 +182,23 @@ test("Wind direction variation", "KMSO 291200Z 18010KT 180V240 9999 SCT030 10/05
     assert.strictEqual(result.wind.variableTo, 240);
 });
 
+/**/
+test("Weather intensity", "UKBB 161500Z 25012KT 4000 -RA SCT015 18/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "-RA");
+    assert.strictEqual(result.weather[0].intensity, "light");
+});
+
+/**/
+test("Weather proximity", "UKBB 161500Z 25012KT 9999 VCSH SCT020 18/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "VCSH");
+    assert.strictEqual(result.weather[0].code, "VCSH");
+});
+
+/**/
+test("Heavy rain showers", "UKBB 161500Z 25012KT 3000 +SHRA SCT015 18/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "+SHRA");
+    assert.strictEqual(result.weather[0].intensity, "heavy");
+    assert.strictEqual(result.weather[0].code, "+SHRA");
+});
+
 console.log("\nAll automated v0.1 tests passed.");
