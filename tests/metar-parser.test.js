@@ -201,4 +201,17 @@ test("Heavy rain showers", "UKBB 161500Z 25012KT 3000 +SHRA SCT015 18/12 Q1012",
     assert.strictEqual(result.weather[0].code, "+SHRA");
 });
 
+/**/
+test("Thunderstorm in vicinity", "UKBB 161500Z 25012KT 9999 VCTS SCT020 18/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "VCTS");
+    assert.strictEqual(result.weather[0].code, "VCTS");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Freezing drizzle", "UKBB 161500Z 25012KT 3000 FZDZ SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "FZDZ");
+    assert.strictEqual(result.weather[0].code, "FZDZ");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
 console.log("\nAll automated v0.1 tests passed.");
