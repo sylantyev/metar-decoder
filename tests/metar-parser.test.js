@@ -214,4 +214,139 @@ test("Freezing drizzle", "UKBB 161500Z 25012KT 3000 FZDZ SCT015 02/01 Q1012", re
     assert.strictEqual(result.weather[0].code, "FZDZ");
     assert.strictEqual(result.weather[0].intensity, null);
 });
+
+/**/
+test("Blowing snow", "UKBB 161500Z 25012KT 4000 BLSN SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "BLSN");
+    assert.strictEqual(result.weather[0].code, "BLSN");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Drifting snow", "UKBB 161500Z 25012KT 4000 DRSN SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "DRSN");
+    assert.strictEqual(result.weather[0].code, "DRSN");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Snow showers", "UKBB 161500Z 25012KT 4000 SHSN SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "SHSN");
+    assert.strictEqual(result.weather[0].code, "SHSN");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Thunderstorm with snow", "UKBB 161500Z 25012KT 4000 TSSN SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "TSSN");
+    assert.strictEqual(result.weather[0].code, "TSSN");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Heavy thunderstorm rain", "UKBB 161500Z 25012KT 3000 +TSRA SCT015 18/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "+TSRA");
+    assert.strictEqual(result.weather[0].code, "+TSRA");
+    assert.strictEqual(result.weather[0].intensity, "heavy");
+});
+
+/**/
+test("Hail showers", "UKBB 161500Z 25012KT 3000 SHGR SCT015 18/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "SHGR");
+    assert.strictEqual(result.weather[0].code, "SHGR");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Heavy snow", "UKBB 161500Z 25012KT 3000 +SN SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "+SN");
+    assert.strictEqual(result.weather[0].code, "+SN");
+    assert.strictEqual(result.weather[0].intensity, "heavy");
+});
+
+
+/**/
+test("Light snow", "UKBB 161500Z 25012KT 3000 -SN SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "-SN");
+    assert.strictEqual(result.weather[0].code, "-SN");
+    assert.strictEqual(result.weather[0].intensity, "light");
+});
+
+/**/
+test("Moderate snow", "UKBB 161500Z 25012KT 3000 SN SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "SN");
+    assert.strictEqual(result.weather[0].code, "SN");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Heavy drizzle", "UKBB 161500Z 25012KT 2000 +DZ SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "+DZ");
+    assert.strictEqual(result.weather[0].code, "+DZ");
+    assert.strictEqual(result.weather[0].intensity, "heavy");
+});
+
+/**/
+test("Light drizzle", "UKBB 161500Z 25012KT 2000 -DZ SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "-DZ");
+    assert.strictEqual(result.weather[0].code, "-DZ");
+    assert.strictEqual(result.weather[0].intensity, "light");
+});
+
+/**/
+test("Moderate drizzle", "UKBB 161500Z 25012KT 2000 DZ SCT015 02/01 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "DZ");
+    assert.strictEqual(result.weather[0].code, "DZ");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Heavy fog", "UKBB 161500Z 25012KT 0500 +FG SCT002 12/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "+FG");
+    assert.strictEqual(result.weather[0].code, "+FG");
+    assert.strictEqual(result.weather[0].intensity, "heavy");
+});
+
+/**/
+test("Light fog", "UKBB 161500Z 25012KT 0500 -FG SCT002 12/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "-FG");
+    assert.strictEqual(result.weather[0].code, "-FG");
+    assert.strictEqual(result.weather[0].intensity, "light");
+});
+
+/**/
+test("Moderate fog", "UKBB 161500Z 25012KT 0500 FG SCT002 12/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "FG");
+    assert.strictEqual(result.weather[0].code, "FG");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Heavy haze", "UKBB 161500Z 25012KT 3000 +HZ SCT015 18/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "+HZ");
+    assert.strictEqual(result.weather[0].code, "+HZ");
+    assert.strictEqual(result.weather[0].intensity, "heavy");
+});
+
+/**/
+test("Light haze", "UKBB 161500Z 25012KT 3000 -HZ SCT015 18/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "-HZ");
+    assert.strictEqual(result.weather[0].code, "-HZ");
+    assert.strictEqual(result.weather[0].intensity, "light");
+});
+
+/**/
+test("Moderate haze", "UKBB 161500Z 25012KT 3000 HZ SCT015 18/12 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "HZ");
+    assert.strictEqual(result.weather[0].code, "HZ");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
+/**/
+test("Mist", "UKBB 161500Z 25012KT 1500 BR SCT005 12/11 Q1012", result => {
+    assert.strictEqual(result.weather[0].raw, "BR");
+    assert.strictEqual(result.weather[0].code, "BR");
+    assert.strictEqual(result.weather[0].intensity, null);
+});
+
 console.log("\nAll automated v0.1 tests passed.");
