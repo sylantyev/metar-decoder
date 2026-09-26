@@ -43,6 +43,7 @@ test("Variable wind", "KMSO 282053Z VRB03KT 10SM CLR 27/06 A2991", result => {
     assert.strictEqual(result.wind.variableTo, undefined);
 });
 
+
 /**/
 
 test("CLR cloud condition", "KMSO 282053Z VRB03KT 10SM CLR 27/06 A2991", result => {
@@ -347,6 +348,183 @@ test("Mist", "UKBB 161500Z 25012KT 1500 BR SCT005 12/11 Q1012", result => {
     assert.strictEqual(result.weather[0].raw, "BR");
     assert.strictEqual(result.weather[0].code, "BR");
     assert.strictEqual(result.weather[0].intensity, null);
+});
+
+
+/**/
+test("Cumulonimbus cloud type", "UKBB 161500Z 25012KT 9999 SCT020CB 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds[0].raw, "SCT020CB");
+    assert.strictEqual(result.clouds[0].amount, "SCT");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 2000);
+    assert.strictEqual(result.clouds[0].type, "CB");
+});
+
+/**/
+test("Towering cumulus cloud type", "UKBB 161500Z 25012KT 9999 SCT020TCU 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds[0].raw, "SCT020TCU");
+    assert.strictEqual(result.clouds[0].amount, "SCT");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 2000);
+    assert.strictEqual(result.clouds[0].type, "TCU");
+});
+
+
+/**/
+test("Broken cumulonimbus cloud", "UKBB 161500Z 25012KT 9999 BKN030CB 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds[0].raw, "BKN030CB");
+    assert.strictEqual(result.clouds[0].amount, "BKN");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 3000);
+    assert.strictEqual(result.clouds[0].type, "CB");
+});
+
+/**/
+test("Overcast towering cumulus cloud", "UKBB 161500Z 25012KT 9999 OVC040TCU 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds[0].raw, "OVC040TCU");
+    assert.strictEqual(result.clouds[0].amount, "OVC");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 4000);
+    assert.strictEqual(result.clouds[0].type, "TCU");
+});
+
+/**/
+test("Few cumulonimbus cloud", "UKBB 161500Z 25012KT 9999 FEW015CB 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds[0].raw, "FEW015CB");
+    assert.strictEqual(result.clouds[0].amount, "FEW");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 1500);
+    assert.strictEqual(result.clouds[0].type, "CB");
+});
+
+
+/**/
+test("Scattered towering cumulus cloud", "UKBB 161500Z 25012KT 9999 SCT025TCU 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds[0].raw, "SCT025TCU");
+    assert.strictEqual(result.clouds[0].amount, "SCT");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 2500);
+    assert.strictEqual(result.clouds[0].type, "TCU");
+});
+
+/**/
+test("Automated cloud group with missing details", "UKBB 161500Z 25012KT 9999 FEW020/// 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds[0].raw, "FEW020///");
+    assert.strictEqual(result.clouds[0].amount, "FEW");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 2000);
+    assert.strictEqual(result.clouds[0].type, null);
+    assert.strictEqual(result.clouds[0].automated, true);
+});
+
+/**/
+test("Automated cumulonimbus cloud group", "UKBB 161500Z 25012KT 9999 SCT020CB/// 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds[0].raw, "SCT020CB///");
+    assert.strictEqual(result.clouds[0].amount, "SCT");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 2000);
+    assert.strictEqual(result.clouds[0].type, "CB");
+    assert.strictEqual(result.clouds[0].automated, true);
+});
+
+/**/
+test("Automated towering cumulus cloud group", "UKBB 161500Z 25012KT 9999 SCT025TCU/// 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds[0].raw, "SCT025TCU///");
+    assert.strictEqual(result.clouds[0].amount, "SCT");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 2500);
+    assert.strictEqual(result.clouds[0].type, "TCU");
+    assert.strictEqual(result.clouds[0].automated, true);
+});
+
+/**/
+test("Multiple cloud layers with CB and TCU", "UKBB 161500Z 25012KT 9999 FEW015CB SCT025TCU BKN040 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds.length, 3);
+
+    assert.strictEqual(result.clouds[0].amount, "FEW");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 1500);
+    assert.strictEqual(result.clouds[0].type, "CB");
+
+    assert.strictEqual(result.clouds[1].amount, "SCT");
+    assert.strictEqual(result.clouds[1].altitudeFeet, 2500);
+    assert.strictEqual(result.clouds[1].type, "TCU");
+
+    assert.strictEqual(result.clouds[2].amount, "BKN");
+    assert.strictEqual(result.clouds[2].altitudeFeet, 4000);
+    assert.strictEqual(result.clouds[2].type, null);
+});
+
+/**/
+test("Multiple automated cloud layers", "UKBB 161500Z 25012KT 9999 FEW015CB/// SCT025TCU/// BKN040/// 18/12 Q1012", result => {
+    assert.strictEqual(result.clouds.length, 3);
+
+    assert.strictEqual(result.clouds[0].type, "CB");
+    assert.strictEqual(result.clouds[0].altitudeFeet, 1500);
+    assert.strictEqual(result.clouds[0].automated, true);
+
+    assert.strictEqual(result.clouds[1].type, "TCU");
+    assert.strictEqual(result.clouds[1].altitudeFeet, 2500);
+    assert.strictEqual(result.clouds[1].automated, true);
+
+    assert.strictEqual(result.clouds[2].type, null);
+    assert.strictEqual(result.clouds[2].altitudeFeet, 4000);
+    assert.strictEqual(result.clouds[2].automated, true);
+});
+
+/**/
+test("Remarks AO2", "KMSO 282053Z 00000KT 10SM CLR 27/06 A2991 RMK AO2", result => {
+    assert.strictEqual(result.wind.direction, "000");
+    assert.strictEqual(result.wind.speed, 0);
+    assert.strictEqual(result.visibility.statuteMiles, 10);
+    assert.strictEqual(result.temperature, 27);
+    assert.strictEqual(result.dewPoint, 6);
+    assert.strictEqual(result.pressure.inHg, 29.91);
+});
+
+/**/
+test("Remarks sea level pressure", "KMJX 282053Z 20009KT 10SM SCT025 28/17 A3003 RMK AO2 SLP170", result => {
+    assert.strictEqual(result.remarks.includes("SLP170"), true);
+});
+
+/**/
+test("Remarks temperature group", "KMJX 282053Z 20009KT 10SM SCT025 28/17 A3003 RMK AO2 T02280178", result => {
+    assert.strictEqual(result.remarks.includes("T02280178"), true);
+});
+
+
+/**/
+test("Remarks pressure tendency", "KMJX 282053Z 20009KT 10SM SCT025 28/17 A3003 RMK AO2 58008", result => {
+    assert.strictEqual(result.remarks.includes("58008"), true);
+});
+
+/**/
+test("Multiple remarks groups", "KMJX 282053Z 20009KT 10SM SCT025 28/17 A3003 RMK AO2 SLP170 T02280178 58008", result => {
+    assert.strictEqual(result.remarks.length, 4);
+    assert.strictEqual(result.remarks[0], "AO2");
+    assert.strictEqual(result.remarks[1], "SLP170");
+    assert.strictEqual(result.remarks[2], "T02280178");
+    assert.strictEqual(result.remarks[3], "58008");
+});
+
+/**/
+test("SPECI report type", "SPECI UKBB 161500Z 25012KT 9999 SCT020 18/12 Q1012", result => {
+    assert.strictEqual(result.type, "SPECI");
+    assert.strictEqual(result.station, "UKBB");
+    assert.strictEqual(result.observationTime.day, 16);
+    assert.strictEqual(result.wind.direction, "250");
+});
+
+/**/
+test("Negative temperature and dew point", "UKBB 161500Z 25012KT 9999 SCT020 M05/M12 Q1012", result => {
+    assert.strictEqual(result.temperature, -5);
+    assert.strictEqual(result.dewPoint, -12);
+});
+
+
+/**/
+test("Negative temperature with positive dew point", "UKBB 161500Z 25012KT 9999 SCT020 M02/01 Q1012", result => {
+    assert.strictEqual(result.temperature, -2);
+    assert.strictEqual(result.dewPoint, 1);
+});
+
+
+/**/
+test("Variable wind with gust", "UKBB 161500Z VRB03G15KT 9999 SCT020 18/12 Q1012", result => {
+    assert.strictEqual(result.wind.direction, "VRB");
+    assert.strictEqual(result.wind.speed, 3);
+    assert.strictEqual(result.wind.gust, 15);
+    assert.strictEqual(result.wind.unit, "KT");
 });
 
 console.log("\nAll automated v0.1 tests passed.");
